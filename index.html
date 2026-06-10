@@ -18,8 +18,9 @@ body{
     background: linear-gradient(180deg,#0B1026 0%,#111827 40%,#030712 100%);
     color:#F8FAFC;
     height:100vh;
-    font-family:'Inter',sans-serif;
     overflow:hidden;
+    font-family:'Inter',sans-serif;
+    transition:opacity 3s ease;
 }
 
 /* stars */
@@ -74,7 +75,7 @@ body{
     color:#cbd5e1;
 }
 
-/* MAIN FIX: stable centered story box */
+/* layout */
 .container{
     position:relative;
     z-index:2;
@@ -86,23 +87,16 @@ body{
 }
 
 .content{
-    width:100%;
     max-width:700px;
-    max-height:90vh;
-    padding:20px;
     text-align:center;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
+    max-height:90vh;
 }
 
-/* text */
 .title{
     font-family:'Cormorant Garamond',serif;
     font-size:3rem;
     color:#E9D5FF;
-    margin-bottom:20px;
+    margin-bottom:25px;
 }
 
 .line{
@@ -158,7 +152,6 @@ body{
 
 <script>
 
-/* stars */
 const stars = document.getElementById('stars');
 
 for(let i=0;i<120;i++){
@@ -170,8 +163,8 @@ for(let i=0;i<120;i++){
     stars.appendChild(star);
 }
 
-/* story */
 const story = document.getElementById("story");
+const bgm = document.getElementById("bgm");
 
 const lines = [
 "I think of you.",
@@ -191,10 +184,6 @@ const lines = [
 
 let i = 0;
 
-/* music */
-const bgm = document.getElementById("bgm");
-
-/* START */
 document.getElementById("moon").addEventListener("click", () => {
 
     bgm.volume = 0.35;
@@ -208,7 +197,6 @@ document.getElementById("moon").addEventListener("click", () => {
     }, 1200);
 });
 
-/* story flow */
 function showLines(){
 
     if(i < lines.length){
@@ -227,7 +215,6 @@ function showLines(){
     }
 }
 
-/* countdown */
 function startCountdown(){
 
     let num = 50;
@@ -250,7 +237,6 @@ function startCountdown(){
     }, 900);
 }
 
-/* final */
 function showFinal(){
 
     const end = [
@@ -263,7 +249,19 @@ function showFinal(){
 
     function next(){
 
-        if(j >= end.length) return;
+        if(j >= end.length){
+
+            setTimeout(()=>{
+
+                document.body.style.opacity = 0;
+
+                bgm.pause();
+                bgm.currentTime = 0;
+
+            }, 1500);
+
+            return;
+        }
 
         const d = document.createElement("div");
 
