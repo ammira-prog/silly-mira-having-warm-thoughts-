@@ -18,8 +18,8 @@ body{
     background: linear-gradient(180deg,#0B1026 0%,#111827 40%,#030712 100%);
     color:#F8FAFC;
     height:100vh;
-    overflow:hidden;
     font-family:'Inter',sans-serif;
+    overflow:hidden;
 }
 
 /* stars */
@@ -74,7 +74,7 @@ body{
     color:#cbd5e1;
 }
 
-/* layout FIX */
+/* MAIN FIX: stable centered story box */
 .container{
     position:relative;
     z-index:2;
@@ -82,30 +82,35 @@ body{
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:30px;
-    overflow:hidden;
+    padding:20px;
 }
 
 .content{
+    width:100%;
     max-width:700px;
+    max-height:90vh;
+    padding:20px;
     text-align:center;
-    max-height:80vh;
-    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
 }
 
+/* text */
 .title{
-    font-family:'Cormorant+Garamond',serif;
+    font-family:'Cormorant Garamond',serif;
     font-size:3rem;
     color:#E9D5FF;
-    margin-bottom:25px;
+    margin-bottom:20px;
 }
 
 .line{
     opacity:0;
-    font-size:1.15rem;
-    line-height:1.9;
-    margin:10px 0;
-    transition:opacity 1.2s ease;
+    font-size:1.1rem;
+    line-height:1.8;
+    margin:8px 0;
+    transition:opacity 1s ease;
 }
 
 .show{
@@ -114,17 +119,17 @@ body{
 
 .countdown{
     font-family:'Cormorant Garamond',serif;
-    font-size:2.6rem;
+    font-size:2.4rem;
     color:#D8C8FF;
-    margin-top:25px;
+    margin-top:20px;
 }
 
 .chapter{
     font-family:'Cormorant Garamond',serif;
-    font-size:4rem;
+    font-size:3.5rem;
     color:#E9D5FF;
     text-shadow:0 0 10px rgba(233,213,255,.6);
-    margin-top:20px;
+    margin-top:15px;
 }
 </style>
 </head>
@@ -153,7 +158,7 @@ body{
 
 <script>
 
-/* ---------------- STARS ---------------- */
+/* stars */
 const stars = document.getElementById('stars');
 
 for(let i=0;i<120;i++){
@@ -165,10 +170,7 @@ for(let i=0;i<120;i++){
     stars.appendChild(star);
 }
 
-/* ---------------- MUSIC ---------------- */
-const bgm = document.getElementById("bgm");
-
-/* ---------------- STORY ---------------- */
+/* story */
 const story = document.getElementById("story");
 
 const lines = [
@@ -189,7 +191,10 @@ const lines = [
 
 let i = 0;
 
-/* ---------------- START ---------------- */
+/* music */
+const bgm = document.getElementById("bgm");
+
+/* START */
 document.getElementById("moon").addEventListener("click", () => {
 
     bgm.volume = 0.35;
@@ -203,7 +208,7 @@ document.getElementById("moon").addEventListener("click", () => {
     }, 1200);
 });
 
-/* ---------------- STORY FLOW ---------------- */
+/* story flow */
 function showLines(){
 
     if(i < lines.length){
@@ -215,14 +220,14 @@ function showLines(){
         story.appendChild(d);
         i++;
 
-        setTimeout(showLines, 1800);
+        setTimeout(showLines, 1700);
 
     } else {
         startCountdown();
     }
 }
 
-/* ---------------- COUNTDOWN ---------------- */
+/* countdown */
 function startCountdown(){
 
     let num = 50;
@@ -236,16 +241,16 @@ function startCountdown(){
         c.textContent = num + " sunrises";
         num--;
 
-        if(num < 0){
+        if(num <= 0){
             clearInterval(timer);
             c.remove();
             showFinal();
         }
 
-    }, 1000);
+    }, 900);
 }
 
-/* ---------------- FINAL ---------------- */
+/* final */
 function showFinal(){
 
     const end = [
