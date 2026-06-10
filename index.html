@@ -62,16 +62,16 @@ body{
 
 .title{
     font-family:'Cormorant Garamond',serif;
-    font-size:3.2rem;
+    font-size:3rem;
     color:#E9D5FF;
-    margin-bottom:20px;
+    margin-bottom:25px;
 }
 
 .line{
     opacity:0;
     font-size:1.15rem;
     line-height:1.9;
-    margin:12px 0;
+    margin:10px 0;
     transition:opacity 1.2s ease;
 }
 
@@ -81,9 +81,9 @@ body{
 
 .countdown{
     font-family:'Cormorant Garamond',serif;
-    font-size:2.8rem;
+    font-size:2.6rem;
     color:#D8C8FF;
-    margin-top:30px;
+    margin-top:25px;
 }
 
 .chapter{
@@ -97,6 +97,11 @@ body{
 </head>
 
 <body>
+
+<!-- 🎵 MUSIC -->
+<audio id="bgm" loop>
+    <source src="piano.mp3" type="audio/mpeg">
+</audio>
 
 <div id="stars"></div>
 
@@ -121,39 +126,12 @@ for(let i=0;i<120;i++){
     stars.appendChild(star);
 }
 
-/* ---------------- MUSIC (NO FILES) ---------------- */
-let audioCtx;
+/* ---------------- MUSIC ---------------- */
+const bgm = document.getElementById("bgm");
 
 function startMusic(){
-    if(audioCtx) return;
-
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-    const gain = audioCtx.createGain();
-    gain.gain.value = 0.03;
-    gain.connect(audioCtx.destination);
-
-    function tone(f, t, d){
-        const o = audioCtx.createOscillator();
-        o.type = "sine";
-        o.frequency.value = f;
-        o.connect(gain);
-        o.start(t);
-        o.stop(t + d);
-    }
-
-    function loop(){
-        const now = audioCtx.currentTime;
-
-        tone(261.6, now, 8);
-        tone(329.6, now+2, 8);
-        tone(392.0, now+4, 8);
-        tone(523.2, now+6, 8);
-
-        setTimeout(loop, 8000);
-    }
-
-    loop();
+    bgm.volume = 0.35;
+    bgm.play().catch(()=>{});
 }
 
 document.body.addEventListener("click", startMusic, { once:true });
@@ -167,8 +145,7 @@ const lines = [
 "But the thought of holding your hand one day keeps me going.",
 "I want to care for you.",
 "I want to love you.",
-"But I don't want to get ahead of myself.",
-"So tonight, I'll stay in my corner under the same sky.",
+"So tonight, I'll stay under the same sky.",
 "I appreciate what we have.",
 "50 sunrises."
 ];
@@ -250,7 +227,7 @@ function showFinal(){
     next();
 }
 
-/* START */
+/* start */
 setTimeout(showLines, 1000);
 
 </script>
