@@ -20,7 +20,6 @@ body{
     height:100vh;
     overflow:hidden;
     font-family:'Inter',sans-serif;
-    transition:opacity 3s ease;
 }
 
 /* stars */
@@ -92,7 +91,7 @@ body{
 }
 
 .title{
-    font-family:'Cormorant Garamond',serif;
+    font-family:'Cormorant+Garamond',serif;
     font-size:3rem;
     color:#E9D5FF;
     margin-bottom:25px;
@@ -111,7 +110,7 @@ body{
 }
 
 .chapter{
-    font-family:'Cormorant Garamond',serif;
+    font-family:'Cormorant+Garamond',serif;
     font-size:3.5rem;
     color:#E9D5FF;
     text-shadow:0 0 10px rgba(233,213,255,.6);
@@ -205,27 +204,16 @@ function showLines(){
         setTimeout(showLines, 1800);
 
     } else {
-        showFinal();
-    }
-}
 
-/* FINAL + FADE */
-function showFinal(){
+        const final = document.createElement("div");
+        final.className = "chapter show";
+        final.textContent = "Chapter One";
 
-    const d = document.createElement("div");
-    d.className = "chapter show";
-    d.textContent = "Chapter One";
-
-    story.appendChild(d);
-
-    setTimeout(()=>{
-
-        document.body.style.opacity = 0;
+        story.appendChild(final);
 
         bgm.pause();
         bgm.currentTime = 0;
-
-    }, 2500);
+    }
 }
 
 </script>
