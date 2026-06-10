@@ -111,13 +111,6 @@ body{
     opacity:1;
 }
 
-.countdown{
-    font-family:'Cormorant Garamond',serif;
-    font-size:2.4rem;
-    color:#D8C8FF;
-    margin-top:20px;
-}
-
 .chapter{
     font-family:'Cormorant Garamond',serif;
     font-size:3.5rem;
@@ -176,7 +169,6 @@ const lines = [
 "So tonight, I'll stay in my little corner, gazing at the night sky.",
 "And as I look at it, it comforts me knowing we're beneath the same one.",
 "I appreciate what we have.",
-"Fifty sunrises.",
 "I'll try to hold everything together until then.",
 "We'll see if we get to start",
 "Chapter One."
@@ -184,6 +176,7 @@ const lines = [
 
 let i = 0;
 
+/* START */
 document.getElementById("moon").addEventListener("click", () => {
 
     bgm.volume = 0.35;
@@ -197,6 +190,7 @@ document.getElementById("moon").addEventListener("click", () => {
     }, 1200);
 });
 
+/* STORY */
 function showLines(){
 
     if(i < lines.length){
@@ -211,36 +205,15 @@ function showLines(){
         setTimeout(showLines, 1700);
 
     } else {
-        startCountdown();
+        showFinal();
     }
 }
 
-function startCountdown(){
-
-    let num = 50;
-
-    const c = document.createElement("div");
-    c.className = "countdown show";
-    story.appendChild(c);
-
-    const timer = setInterval(()=>{
-
-        c.textContent = num + " sunrises";
-        num--;
-
-        if(num <= 0){
-            clearInterval(timer);
-            c.remove();
-            showFinal();
-        }
-
-    }, 900);
-}
-
+/* FINAL */
 function showFinal(){
 
     const end = [
-        "And when the fifty sunrises are gone...",
+        "And when everything settles...",
         "",
         "Chapter One"
     ];
