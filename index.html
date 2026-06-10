@@ -17,9 +17,9 @@
 body{
     background: linear-gradient(180deg,#0B1026 0%,#111827 40%,#030712 100%);
     color:#F8FAFC;
-    min-height:100vh;
+    height:100vh;
+    overflow:hidden;
     font-family:'Inter',sans-serif;
-    overflow-x:hidden;
 }
 
 /* stars */
@@ -61,6 +61,12 @@ body{
 .moon{
     font-size:6rem;
     cursor:pointer;
+    animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
 }
 
 .tap{
@@ -68,24 +74,27 @@ body{
     color:#cbd5e1;
 }
 
-/* layout */
+/* layout FIX */
 .container{
     position:relative;
     z-index:2;
-    min-height:100vh;
+    height:100vh;
     display:flex;
     align-items:center;
     justify-content:center;
     padding:30px;
+    overflow:hidden;
 }
 
 .content{
     max-width:700px;
     text-align:center;
+    max-height:80vh;
+    overflow:hidden;
 }
 
 .title{
-    font-family:'Cormorant Garamond',serif;
+    font-family:'Cormorant+Garamond',serif;
     font-size:3rem;
     color:#E9D5FF;
     margin-bottom:25px;
@@ -96,7 +105,7 @@ body{
     font-size:1.15rem;
     line-height:1.9;
     margin:10px 0;
-    transition:opacity 1s ease;
+    transition:opacity 1.2s ease;
 }
 
 .show{
@@ -128,7 +137,7 @@ body{
     <div class="tap">Tap the moon</div>
 </div>
 
-<!-- AUDIO -->
+<!-- MUSIC -->
 <audio id="bgm" loop>
     <source src="piano.mp3" type="audio/mpeg">
 </audio>
@@ -156,6 +165,9 @@ for(let i=0;i<120;i++){
     stars.appendChild(star);
 }
 
+/* ---------------- MUSIC ---------------- */
+const bgm = document.getElementById("bgm");
+
 /* ---------------- STORY ---------------- */
 const story = document.getElementById("story");
 
@@ -177,17 +189,12 @@ const lines = [
 
 let i = 0;
 
-/* ---------------- MUSIC ---------------- */
-const bgm = document.getElementById("bgm");
-
-/* ---------------- START EVERYTHING ---------------- */
+/* ---------------- START ---------------- */
 document.getElementById("moon").addEventListener("click", () => {
 
-    // music
     bgm.volume = 0.35;
     bgm.play().catch(()=>{});
 
-    // hide intro
     document.getElementById("intro").style.opacity = 0;
 
     setTimeout(()=>{
@@ -196,7 +203,7 @@ document.getElementById("moon").addEventListener("click", () => {
     }, 1200);
 });
 
-/* ---------------- SHOW STORY ---------------- */
+/* ---------------- STORY FLOW ---------------- */
 function showLines(){
 
     if(i < lines.length){
