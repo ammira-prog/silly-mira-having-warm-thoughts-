@@ -27,7 +27,6 @@ body{
     position:fixed;
     width:100%;
     height:100%;
-    overflow:hidden;
     z-index:0;
 }
 
@@ -45,7 +44,7 @@ body{
     50%{opacity:1;}
 }
 
-/* container */
+/* layout */
 .container{
     position:relative;
     z-index:2;
@@ -58,3 +57,203 @@ body{
 
 .content{
     max-width:700px;
+    text-align:center;
+}
+
+.title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:3.2rem;
+    color:#E9D5FF;
+    margin-bottom:20px;
+}
+
+.line{
+    opacity:0;
+    font-size:1.15rem;
+    line-height:1.9;
+    margin:12px 0;
+    transition:opacity 1.2s ease;
+}
+
+.show{
+    opacity:1;
+}
+
+.countdown{
+    font-family:'Cormorant Garamond',serif;
+    font-size:2.8rem;
+    color:#D8C8FF;
+    margin-top:30px;
+}
+
+.chapter{
+    font-family:'Cormorant Garamond',serif;
+    font-size:4rem;
+    color:#E9D5FF;
+    text-shadow:0 0 10px rgba(233,213,255,.6);
+    margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="stars"></div>
+
+<div class="container">
+    <div class="content">
+        <div class="title">Chapter One</div>
+        <div id="story"></div>
+    </div>
+</div>
+
+<script>
+
+/* ---------------- STARS ---------------- */
+const stars = document.getElementById('stars');
+
+for(let i=0;i<120;i++){
+    const star=document.createElement('div');
+    star.className='star';
+    star.style.left=Math.random()*100+'%';
+    star.style.top=Math.random()*100+'%';
+    star.style.animationDelay=Math.random()*4+'s';
+    stars.appendChild(star);
+}
+
+/* ---------------- MUSIC (NO FILES) ---------------- */
+let audioCtx;
+
+function startMusic(){
+    if(audioCtx) return;
+
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    const gain = audioCtx.createGain();
+    gain.gain.value = 0.03;
+    gain.connect(audioCtx.destination);
+
+    function tone(f, t, d){
+        const o = audioCtx.createOscillator();
+        o.type = "sine";
+        o.frequency.value = f;
+        o.connect(gain);
+        o.start(t);
+        o.stop(t + d);
+    }
+
+    function loop(){
+        const now = audioCtx.currentTime;
+
+        tone(261.6, now, 8);
+        tone(329.6, now+2, 8);
+        tone(392.0, now+4, 8);
+        tone(523.2, now+6, 8);
+
+        setTimeout(loop, 8000);
+    }
+
+    loop();
+}
+
+document.body.addEventListener("click", startMusic, { once:true });
+
+/* ---------------- STORY ---------------- */
+const story = document.getElementById("story");
+
+const lines = [
+"I think of you.",
+"The distance hurts sometimes.",
+"But the thought of holding your hand one day keeps me going.",
+"I want to care for you.",
+"I want to love you.",
+"But I don't want to get ahead of myself.",
+"So tonight, I'll stay in my corner under the same sky.",
+"I appreciate what we have.",
+"50 sunrises."
+];
+
+let i = 0;
+
+function showLines(){
+
+    if(i < lines.length){
+
+        const d = document.createElement("div");
+        d.className = "line show";
+        d.textContent = lines[i];
+
+        story.appendChild(d);
+        i++;
+
+        setTimeout(showLines, 1800);
+
+    } else {
+        startCountdown();
+    }
+}
+
+/* ---------------- COUNTDOWN ---------------- */
+function startCountdown(){
+
+    let num = 50;
+
+    const c = document.createElement("div");
+    c.className = "countdown show";
+    story.appendChild(c);
+
+    const timer = setInterval(()=>{
+
+        c.textContent = num + " sunrises";
+        num--;
+
+        if(num < 0){
+            clearInterval(timer);
+            c.remove();
+            showFinal();
+        }
+
+    }, 1000);
+}
+
+/* ---------------- FINAL ---------------- */
+function showFinal(){
+
+    const end = [
+        "And when the fifty sunrises are gone...",
+        "",
+        "Chapter One"
+    ];
+
+    let j = 0;
+
+    function next(){
+
+        if(j >= end.length) return;
+
+        const d = document.createElement("div");
+
+        if(end[j] === "Chapter One"){
+            d.className = "chapter show";
+        } else {
+            d.className = "line show";
+        }
+
+        d.textContent = end[j];
+
+        story.appendChild(d);
+
+        j++;
+        setTimeout(next, 2000);
+    }
+
+    next();
+}
+
+/* START */
+setTimeout(showLines, 1000);
+
+</script>
+
+</body>
+</html>
