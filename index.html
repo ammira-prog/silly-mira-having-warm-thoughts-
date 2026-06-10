@@ -89,7 +89,6 @@ body{
 .content{
     max-width:700px;
     text-align:center;
-    max-height:90vh;
 }
 
 .title{
@@ -104,7 +103,7 @@ body{
     font-size:1.1rem;
     line-height:1.8;
     margin:8px 0;
-    transition:opacity 1s ease;
+    transition:opacity 1.2s ease;
 }
 
 .show{
@@ -169,6 +168,7 @@ const lines = [
 "So tonight, I'll stay in my little corner, gazing at the night sky.",
 "And as I look at it, it comforts me knowing we're beneath the same one.",
 "I appreciate what we have.",
+"Fifty more sunrises.",
 "I'll try to hold everything together until then.",
 "We'll see if we get to start",
 "Chapter One."
@@ -202,57 +202,30 @@ function showLines(){
         story.appendChild(d);
         i++;
 
-        setTimeout(showLines, 1700);
+        setTimeout(showLines, 1800);
 
     } else {
         showFinal();
     }
 }
 
-/* FINAL */
+/* FINAL + FADE */
 function showFinal(){
 
-    const end = [
-        "And when everything settles...",
-        "",
-        "Chapter One"
-    ];
+    const d = document.createElement("div");
+    d.className = "chapter show";
+    d.textContent = "Chapter One";
 
-    let j = 0;
+    story.appendChild(d);
 
-    function next(){
+    setTimeout(()=>{
 
-        if(j >= end.length){
+        document.body.style.opacity = 0;
 
-            setTimeout(()=>{
+        bgm.pause();
+        bgm.currentTime = 0;
 
-                document.body.style.opacity = 0;
-
-                bgm.pause();
-                bgm.currentTime = 0;
-
-            }, 1500);
-
-            return;
-        }
-
-        const d = document.createElement("div");
-
-        if(end[j] === "Chapter One"){
-            d.className = "chapter show";
-        } else {
-            d.className = "line show";
-        }
-
-        d.textContent = end[j];
-
-        story.appendChild(d);
-
-        j++;
-        setTimeout(next, 2000);
-    }
-
-    next();
+    }, 2500);
 }
 
 </script>
